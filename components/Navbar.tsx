@@ -1,12 +1,39 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import NavItems from "./NavItems";
 import { IoSearch } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
+import { FaRegBell } from "react-icons/fa";
+import AccountOption from "./AccountOption";
 
-const Navbar = () => {
+const Navbar = ({ image }: { image: string }) => {
+  const [accountPannel, setAccountPannel] = useState<boolean>(false);
+  const [navbarBg, setNavbarBg] = useState<boolean>(false);
+  const TOP_OFFSET = 66;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= TOP_OFFSET) {
+        setNavbarBg(true);
+      } else {
+        setNavbarBg(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="w-full flex justify-between items-center px-14 py-5">
+    <nav
+      className={`w-full transition-all ${
+        navbarBg ? "bg-black opacity-90" : ""
+      } fixed z-40 flex justify-between items-center px-14 py-5`}
+    >
       <div className="flex justify-center items-center gap-10">
         <img
           className="h-[30px]"
@@ -18,11 +45,22 @@ const Navbar = () => {
         <NavItems />
       </div>
       <div className="flex relative gap-6 justify-center items-center">
-        <IoSearch size={27} />
-        <div className="group flex gap-2 justify-center items-center">
-          <MdAccountCircle size={27} />
-          <IoIosArrowDown size={15} className="group-hover:rotate-180 transition" />
-          <div className="w-[200px] flex-col justify-center items-center top-[35px] hidden group-hover:flex right-0 absolute h-[200px] bg-black opacity-80"></div>
+        <IoSearch size={25} />
+        <FaRegBell size={25} />
+        <div
+          onClick={() => setAccountPannel((p) => !p)}
+          className="flex gap-2 justify-center cursor-pointer items-center"
+        >
+          {image ? (
+            <img className="h-8 rounded-full" src={image} alt="profile" />
+          ) : (
+            <MdAccountCircle size={25} />
+          )}
+          <IoIosArrowDown
+            size={15}
+            className={`${accountPannel && "rotate-180"} transition`}
+          />
+          <AccountOption image={image} accountPannel={accountPannel} />
         </div>
       </div>
     </nav>

@@ -15,7 +15,10 @@ const page = async () => {
         <Link href={"/"} prefetch>
           <img
             className="h-40 w-40 rounded-md"
-            src="https://github.com/burakorkmez/mern-netflix-clone/blob/master/frontend/public/avatar3.png?raw=true"
+            src={
+              (session && session.user?.image) ||
+              "https://github.com/burakorkmez/mern-netflix-clone/blob/master/frontend/public/avatar3.png?raw=true"
+            }
             alt="profile"
           />
         </Link>

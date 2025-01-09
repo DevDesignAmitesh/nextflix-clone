@@ -1,43 +1,28 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
-
-interface navItemsProps {
-  label: string;
-  path: string;
-}
+import React, { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
+import BrowseOption from "./BrowseOption";
 
 const NavItems = () => {
-  const navItems: navItemsProps[] = [
-    { label: "Home", path: "/" },
-    { label: "TV Shows", path: "/about" },
-    { label: "Movies", path: "/services" },
-    { label: "New & Popular", path: "/contact" },
-    { label: "My List", path: "/list" },
-    { label: "Browse By Language", path: "/browse" },
-  ];
-
-  const pathName = usePathname();
+  const [browsePannel, setBrowsePannel] = useState<boolean>(false);
 
   return (
-    <div className="flex justify-center items-center gap-4 text-[14px] capitalize">
-      {navItems.map((item) => {
-        const isActive = pathName === item.path;
-        return (
-          <Link
-            key={item.label}
-            href={item.path}
-            className={`transition-all font-[300] cursor-pointer ${
-              isActive ? "font-[500]" : "hover:opacity-60"
-            }`}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
-    </div>
+    <>
+      <BrowseOption className="lg:flex hidden" />
+      <div
+        onClick={() => setBrowsePannel((p) => !p)}
+        className="flex relative cursor-pointer lg:hidden text-[14px] justify-center items-center gap-2"
+      >
+        <p>Browse</p>
+        <IoIosArrowDown className={`${browsePannel ? "rotate-180" : "rotate-0"} transition`} size={15} />
+        {browsePannel && (
+          <div className="absolute p-3 rounded-md top-10 right-0 bg-black opacity-80">
+            <BrowseOption className="lg:hidden flex flex-col whitespace-nowrap" />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
