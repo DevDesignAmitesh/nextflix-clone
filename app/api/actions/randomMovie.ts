@@ -12,19 +12,13 @@ export async function randomMovie() {
       take: 1,
       skip: randomIndex,
     });
-    return NextResponse.json(
-      {
-        randomMovie,
-      },
-      { status: 200 }
-    );
+    return {
+      randomMovie,
+    };
   } catch (error) {
     console.log(error);
-    return NextResponse.json(
-      {
-        error,
-      },
-      { status: 400 }
-    );
+    return {
+      error,
+    };
   }
 }
