@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/prisma/src";
-import { NextResponse } from "next/server";
 
 export async function randomMovie() {
   try {

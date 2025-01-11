@@ -1,16 +1,35 @@
 import React from "react";
+import { oneMovie } from "@/app/api/actions/oneMovie";
 import Link from "next/link";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { oneMovie } from "@/app/api/actions/oneMovie";
 
-interface MovieProps {
-  params: { movieId: string };
+// Adjust the way you handle params
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ movieId: string }>;
+}) {
+  const { movieId } = await params; // Await `params`
+  const movie = await oneMovie(movieId);
+
+  if (!movie) {
+    return {
+      title: "Movie not found",
+    };
+  }
+
+  return {
+    title: `${movie.title} - Watch Now`,
+    description: movie.description || "Watch this amazing movie!",
+  };
 }
 
-const WatchMovie = async ({ params }: MovieProps) => {
-  const { movieId } = params;
-
-  // Fetch movie data
+const WatchMovie = async ({
+  params,
+}: {
+  params: Promise<{ movieId: string }>;
+}) => {
+  const { movieId } = await params; // Await `params` to fix the error
   const movie = await oneMovie(movieId);
 
   if (!movie) {

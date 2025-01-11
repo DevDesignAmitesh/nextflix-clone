@@ -15,13 +15,19 @@ const page = async () => {
     <>
       <div className="bg-[#171719] w-full min-h-screen text-white">
         <Navbar image={userProfile} />
-        <div className=" w-full h-full pt-28 px-14">
-          <MovieList
-            email={userEmail}
-            finalMovies={allFavMovies}
-            label="My List"
-          />
-        </div>
+        {allFavMovies.length !== 0 ? (
+          <div className=" w-full h-screen pt-28 px-14">
+            <MovieList
+              email={userEmail}
+              finalMovies={allFavMovies}
+              label="My List"
+            />
+          </div>
+        ) : (
+          <div className="w-full h-screen flex justify-center items-center text-2xl">
+            No Favourite Movies
+          </div>
+        )}
       </div>
     </>
   );

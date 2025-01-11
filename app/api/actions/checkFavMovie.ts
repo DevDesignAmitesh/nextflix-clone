@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/prisma/src";
-import { NextResponse } from "next/server";
 
 export async function checkFavMovie(movieId: string, email: string) {
   const existingUser = await prisma.user.findUnique({
@@ -11,10 +10,10 @@ export async function checkFavMovie(movieId: string, email: string) {
   });
 
   if (!existingUser) {
-    return NextResponse.json({ message: "invalid email" }, { status: 404 });
+    return { message: "invalid email" };
   }
 
   const isFavMovie = existingUser.favoriteIds.includes(movieId);
 
-  return { isFavMovie }
+  return { isFavMovie };
 }

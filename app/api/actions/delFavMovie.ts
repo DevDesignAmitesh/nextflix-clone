@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/prisma/src";
-import { NextResponse } from "next/server";
 
 export async function delFavMovie(movieId: string, email: string) {
   try {
@@ -12,12 +11,9 @@ export async function delFavMovie(movieId: string, email: string) {
     });
 
     if (!existingUser) {
-      return NextResponse.json(
-        {
-          message: "invalid email",
-        },
-        { status: 404 }
-      );
+      return {
+        message: "invalid email",
+      };
     }
 
     const favMovie = await prisma.movie.findUnique({
@@ -27,12 +23,9 @@ export async function delFavMovie(movieId: string, email: string) {
     });
 
     if (!favMovie) {
-      return NextResponse.json(
-        {
-          message: "invalid movieId",
-        },
-        { status: 404 }
-      );
+      return {
+        message: "invalid movieId",
+      };
     }
 
     const updateFavMovieId = existingUser.favoriteIds.filter(
@@ -51,21 +44,18 @@ export async function delFavMovie(movieId: string, email: string) {
     });
 
     if (!updateUser) {
-      return NextResponse.json(
-        {
-          message: "error adding fav movie",
-        },
-        { status: 404 }
-      );
+      return {
+        message: "error adding fav movie",
+      };
     }
 
     return {
-      message: "successfully deleted"
-    }
+      message: "successfully deleted",
+    };
   } catch (error) {
     console.log(error);
     return {
-      error: "error occured"
-    }
+      error: "error occured",
+    };
   }
 }

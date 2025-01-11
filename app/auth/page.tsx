@@ -6,6 +6,9 @@ import { register } from "../api/actions/register";
 import { signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import Statement from "@/components/Statement";
+import WhiteButton from "@/components/WhiteButton";
+import RedButton from "@/components/RedButton";
 
 const page = () => {
   const [email, setEmail] = useState<string>("");
@@ -15,7 +18,6 @@ const page = () => {
 
   const loginFunction = async function () {
     try {
-      console.log("hello");
       await signIn("credentials", {
         email,
         password,
@@ -24,17 +26,17 @@ const page = () => {
       });
     } catch (error) {
       console.log(error);
+      return;
     }
   };
 
   const registerFunction = async function () {
     try {
-      console.log("hello");
       await register(name, email, password);
-      console.log("hello2222222222");
       await loginFunction();
     } catch (error) {
       console.log(error);
+      return;
     }
   };
 
@@ -76,60 +78,38 @@ const page = () => {
             value={password}
           />
           {value === "register" ? (
-            <button
-              onClick={registerFunction}
-              className="w-full mt-2 rounded-md bg-red-600 hover:bg-red-700 p-2 text-center font-medium"
-            >
-              Register
-            </button>
+            <RedButton onClick={registerFunction} label="Register" />
           ) : (
-            <button
-              onClick={loginFunction}
-              className="w-full mt-2 rounded-md bg-red-600 hover:bg-red-700 p-2 text-center font-medium"
-            >
-              Log in
-            </button>
+            <RedButton onClick={loginFunction} label="Log in" />
           )}
 
           <div className="flex justify-center w-full items-center gap-4 mt-6 mb-4">
-            <button
+            <WhiteButton
               onClick={() => signIn("google", { callbackUrl: "/profiles" })}
-              className="bg-white rounded-full cursor-pointer flex justify-center items-center p-2"
-            >
-              <FcGoogle size={30} />
-            </button>
-            <button
+              children={<FcGoogle size={30} />}
+            />
+            <WhiteButton
               onClick={() => signIn("github", { callbackUrl: "/profiles" })}
-              className="bg-white rounded-full cursor-pointer flex justify-center items-center p-2"
-            >
-              <FaGithub color="black" size={30} />
-            </button>
+              children={<FaGithub color="black" size={30} />}
+            />
           </div>
 
           {value === "register" ? (
-            <p className="text-[14px] mt-2 text-neutral-500 font-medium">
-              Already have a account?{" "}
-              <span
-                onClick={() => {
-                  setValue("login");
-                }}
-                className="text-white cursor-pointer"
-              >
-                Login
-              </span>
-            </p>
+            <Statement
+              label="Already have a account?"
+              span="Login"
+              onClick={() => {
+                setValue("login");
+              }}
+            />
           ) : (
-            <p className="text-[14px] mt-2 text-neutral-500 font-medium">
-              Create an account?{" "}
-              <span
-                onClick={() => {
-                  setValue("register");
-                }}
-                className="text-white cursor-pointer"
-              >
-                Sign up
-              </span>
-            </p>
+            <Statement
+              label="Create an account?"
+              span="Register"
+              onClick={() => {
+                setValue("register");
+              }}
+            />
           )}
         </div>
       </div>

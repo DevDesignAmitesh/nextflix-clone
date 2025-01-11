@@ -6,14 +6,18 @@ import React from "react";
 import BillBoard from "@/components/BillBoard";
 import MovieList from "@/components/MovieList";
 import { allMovies } from "./api/actions/allMovies";
+import { randomMovie } from "./api/actions/randomMovie";
 
 const page = async () => {
   const sesssion = await getServerSession(auth);
-  const userEmail = sesssion?.user?.email as string
-  const userProfile = sesssion?.user?.image as string
+  const userEmail = sesssion?.user?.email as string;
+  const userProfile = sesssion?.user?.image as string;
 
   const res = await allMovies();
   const movies = res.allMovies;
+
+  const response = await randomMovie();
+  const randomMovies: any = response.randomMovie;
 
   if (!sesssion) {
     redirect("/auth");
@@ -23,7 +27,7 @@ const page = async () => {
     <>
       <div className="bg-[#171719] w-full h-auto text-white">
         <Navbar image={userProfile} />
-        <BillBoard />
+        <BillBoard movies={randomMovies} email={userEmail} />
         <div className="w-full gap-8 flex flex-col p-14 justify-start items-center h-screen">
           <MovieList
             email={userEmail}

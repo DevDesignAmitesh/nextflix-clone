@@ -1,17 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { FaPlay } from "react-icons/fa";
+import { FiInfo } from "react-icons/fi";
 import FavButton from "./FavButton";
 import Link from "next/link";
+import Popup from "./Popup"; // Import Popup component
 
-const MovieList = async ({
-  label,
-  finalMovies,
-  email,
-}: {
-  label: string;
-  finalMovies: any;
-  email: string,
-}) => {
+const MovieList = ({ label, finalMovies, email }: { label: string; finalMovies: any; email: string; }) => {
+  const [popupMovie, setPopupMovie] = useState<any | null>(null); // Track which movie's popup to show
+
+  const openPopup = (movie: any) => {
+    setPopupMovie(movie); // Open the popup for the clicked movie
+  };
+
+  const closePopup = () => {
+    setPopupMovie(null); // Close the popup
+  };
+
   return (
     <>
       {finalMovies.length !== 0 && (
@@ -19,7 +25,7 @@ const MovieList = async ({
           <h1 className="text-2xl font-semibold capitalize">{label}</h1>
           <div className="flex w-full justify-start items-center gap-3">
             {finalMovies.map((m: any) => (
-              <div className="group relative w-[300px]">
+              <div key={m.id} className="group relative w-[300px]">
                 <img
                   className="h-[150px] w-full transition cursor-pointer shadow-xl group-hover:opacity-0 rounded-md delay-300 bg-no-repeat object-cover object-center"
                   src={m.thumbnailUrl}
@@ -34,11 +40,19 @@ const MovieList = async ({
                   <div className="w-full p-5 flex-col gap-4 flex justify-center items-start">
                     <div className="flex justify-center items-center gap-3">
                       <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
-                        <Link href={`/watch/${m.id}`} >
-                        <FaPlay  size={20} color="black" />
+                        <Link href={`/watch/${m.id}`}>
+                          <FaPlay size={20} color="black" />
                         </Link>
                       </div>
                       <FavButton email={email} movieId={m.id} />
+                      {/* Info Button */}
+                      <button
+                        className="w-10 h-10 bg-white rounded-full flex justify-center items-center"
+                        onClick={() => openPopup(m)} // Open popup for the clicked movie
+                        aria-label="More Info"
+                      >
+                        <FiInfo size={20} color="black" />
+                      </button>
                     </div>
                     <p className="text-[14px] font-semibold text-green-600">
                       New{" "}
@@ -55,6 +69,9 @@ const MovieList = async ({
           </div>
         </div>
       )}
+
+      {/* Show Popup when movie is clicked */}
+      {popupMovie && <Popup email={email} movie={popupMovie} onClose={closePopup} />}
     </>
   );
 };

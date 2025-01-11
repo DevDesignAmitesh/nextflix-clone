@@ -1,5 +1,4 @@
 import { prisma } from "@/prisma/src";
-import { NextResponse } from "next/server";
 
 export async function allfavMovie(email: string) {
   try {
@@ -10,12 +9,9 @@ export async function allfavMovie(email: string) {
     });
 
     if (!user) {
-      return NextResponse.json(
-        {
-          message: "invalid email",
-        },
-        { status: 404 }
-      );
+      return {
+        message: "invalid email",
+      }
     }
 
     const userFavMovie = await prisma.movie.findMany({

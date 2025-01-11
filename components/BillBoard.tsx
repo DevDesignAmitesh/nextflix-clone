@@ -1,12 +1,22 @@
-import { randomMovie } from "@/app/api/actions/randomMovie";
+"use client"
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FaPlay } from "react-icons/fa";
+import Popup from "./Popup"; // Import Popup component
 import { FiInfo } from "react-icons/fi";
 
-const BillBoard = async () => {
-  const response = await randomMovie();
-  const movies: any = response.randomMovie;
+const BillBoard = ({ email, movies }: { email: string, movies: any }) => {
+  const [popupMovie, setPopupMovie] = useState<any | null>(null); // Track which movie's popup to show
+
+  const openPopup = (movie: any) => {
+    setPopupMovie(movie); // Open the popup for the clicked movie
+  };
+
+  const closePopup = () => {
+    setPopupMovie(null); // Close the popup
+  };
+
   return (
     <>
       {movies.map((movie: any) => (
@@ -32,14 +42,22 @@ const BillBoard = async () => {
                 <FaPlay />
                 Play
               </Link>
-              <button className="capitalize text-xl flex justify-center items-center gap-2 font-semibold rounded-md bg-[#67615D] py-2 px-4">
-                <FiInfo />
-                more info
+              {/* Info Button - Popup */}
+              <button
+                className="flex items-center gap-2 text-xl font-semibold rounded-md bg-[#67615D] py-2 px-4"
+                onClick={() => openPopup(movie)} // Open popup for the clicked movie
+                aria-label="More Info"
+              >
+                <FiInfo size={25} />
+                More Info
               </button>
             </div>
           </div>
         </div>
       ))}
+
+      {/* Show Popup when movie is clicked */}
+      {popupMovie && <Popup email={email} movie={popupMovie} onClose={closePopup} />}
     </>
   );
 };
