@@ -7,7 +7,15 @@ import FavButton from "./FavButton";
 import Link from "next/link";
 import Popup from "./Popup"; // Import Popup component
 
-const MovieList = ({ label, finalMovies, email }: { label: string; finalMovies: any; email: string; }) => {
+const MovieList = ({
+  label,
+  finalMovies,
+  email,
+}: {
+  label: string;
+  finalMovies: any;
+  email: string;
+}) => {
   const [popupMovie, setPopupMovie] = useState<any | null>(null); // Track which movie's popup to show
 
   const openPopup = (movie: any) => {
@@ -22,46 +30,58 @@ const MovieList = ({ label, finalMovies, email }: { label: string; finalMovies: 
     <>
       {finalMovies.length !== 0 && (
         <div className="flex flex-col w-full gap-3 justify-center items-start">
-          <h1 className="text-2xl font-semibold capitalize">{label}</h1>
-          <div className="flex w-full justify-start items-center gap-3">
+          <h1 className="sm:text-2xl text-xl font-semibold capitalize">
+            {label}
+          </h1>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
             {finalMovies.map((m: any) => (
-              <div key={m.id} className="group relative w-[300px]">
+              <div
+                key={m.id}
+                className="group relative h-[40vw] sm:h-[30vw] md:h-[20vw] lg:h-[16vw] xl:h-[12vw]"
+              >
+                {/* Movie Thumbnail */}
                 <img
-                  className="h-[150px] w-full transition cursor-pointer shadow-xl group-hover:opacity-0 rounded-md delay-300 bg-no-repeat object-cover object-center"
+                  className="h-full w-full transition cursor-pointer shadow-xl group-hover:opacity-0 rounded-md delay-300 bg-no-repeat object-cover object-center"
                   src={m.thumbnailUrl}
                   alt="thumbnail"
                 />
-                <div className="absolute opacity-0 scale-0 group-hover:scale-110 group-hover:opacity-100 top-0 h-[350px] group-hover:-translate-y-[6vw] z-10 transition duration-200 visible delay-300 w-[300px] rounded-md bg-[#212124]">
+                {/* Hover Details */}
+                <div className="absolute opacity-0 scale-0 group-hover:scale-110 group-hover:opacity-100 top-0 h-auto w-full z-10 transition duration-200 visible delay-300 rounded-md bg-[#212124] p-2 sm:p-4">
+                  {/* Hover Thumbnail */}
                   <img
                     className="h-[50%] w-full shadow-xl rounded-md bg-no-repeat object-cover object-center"
                     src={m.thumbnailUrl}
                     alt="thumbnail"
                   />
-                  <div className="w-full p-5 flex-col gap-4 flex justify-center items-start">
-                    <div className="flex justify-center items-center gap-3">
-                      <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
-                        <Link href={`/watch/${m.id}`}>
-                          <FaPlay size={20} color="black" />
-                        </Link>
-                      </div>
+                  <div className="flex flex-col pt-2 gap-2">
+                    {/* Play & Info Buttons */}
+                    <div className="flex justify-center items-center gap-2">
+                      <Link
+                        className="p-2 sm:p-3 bg-black rounded-full flex justify-center items-center"
+                        href={`/watch/${m.id}`}
+                      >
+                        <FaPlay className="text-xs sm:text-sm" color="white" />
+                      </Link>
                       <FavButton email={email} movieId={m.id} />
-                      {/* Info Button */}
                       <button
-                        className="w-10 h-10 bg-white rounded-full flex justify-center items-center"
-                        onClick={() => openPopup(m)} // Open popup for the clicked movie
+                        className="p-2 sm:p-3 bg-black rounded-full flex justify-center items-center"
+                        onClick={() => openPopup(m)}
                         aria-label="More Info"
                       >
-                        <FiInfo size={20} color="black" />
+                        <FiInfo className="text-sm sm:text-lg" color="white" />
                       </button>
                     </div>
-                    <p className="text-[14px] font-semibold text-green-600">
+                    {/* Movie Details */}
+                    <p className="text-[10px] sm:text-[12px] font-semibold text-green-600">
                       New{" "}
                       <span className="text-white">
                         {new Date().getFullYear()}
                       </span>
                     </p>
-                    <p className="text-[12px]">{m.duration}</p>
-                    <p className="text-[12px] capitalize">{m.genre}</p>
+                    <p className="text-[9px] sm:text-[12px]">{m.duration}</p>
+                    <p className="text-[9px] sm:text-[12px] capitalize">
+                      {m.genre}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -71,7 +91,9 @@ const MovieList = ({ label, finalMovies, email }: { label: string; finalMovies: 
       )}
 
       {/* Show Popup when movie is clicked */}
-      {popupMovie && <Popup email={email} movie={popupMovie} onClose={closePopup} />}
+      {popupMovie && (
+        <Popup email={email} movie={popupMovie} onClose={closePopup} />
+      )}
     </>
   );
 };

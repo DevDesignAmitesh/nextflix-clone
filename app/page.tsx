@@ -25,10 +25,10 @@ const page = async () => {
 
   return (
     <>
-      <div className="bg-[#171719] w-full h-auto text-white">
+      <div className="bg-[#171719] overflow-auto w-full h-auto text-white">
         <Navbar image={userProfile} />
         <BillBoard movies={randomMovies} email={userEmail} />
-        <div className="w-full gap-8 flex flex-col p-14 justify-start items-center h-screen">
+        <div className="w-full gap-8 flex flex-col p-5 sm:p-14 justify-start items-center h-screen">
           <MovieList
             email={userEmail}
             finalMovies={movies}

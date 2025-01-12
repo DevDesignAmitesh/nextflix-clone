@@ -29,26 +29,26 @@ const BillBoard = ({ email, movies }: { email: string, movies: any }) => {
             className="h-[56.25vw] w-full object-cover brightness-[60%]"
             src={movie.videoUrl}
           />
-          <div className="top-[35%] ml-16 absolute">
-            <h1 className="text-4xl capitalize font-bold">{movie.title}</h1>
-            <p className="text-[17px] mt-3 capitalize w-[60%]">
+          <div className="sm:top-[35%] top-[25%] ml-5 sm:ml-16 absolute">
+            <h1 className="text-[7vmin] capitalize font-bold">{movie.title}</h1>
+            <p className="text-[2vmin] sm:mt-3 capitalize w-[80%] sm:w-[60%]">
               {movie.description}
             </p>
-            <div className="flex gap-5 mt-5">
+            <div className="flex gap-5 mt-2 sm:mt-5">
               <Link
-                className="capitalize text-xl flex justify-center items-center gap-2 font-semibold rounded-md bg-[#fff] text-black py-2 px-4"
+                className="capitalize text-lg sm:text-xl flex justify-center items-center gap-2 sm:font-semibold font-medium rounded-md bg-[#fff] text-black py-0 sm:py-2 px-4"
                 href={`/watch/${movie.id}`}
               >
-                <FaPlay />
+                <FaPlay className="text-sm sm:text-xl" />
                 Play
               </Link>
               {/* Info Button - Popup */}
               <button
-                className="flex items-center gap-2 text-xl font-semibold rounded-md bg-[#67615D] py-2 px-4"
+                className="flex items-center gap-2 text-lg sm:text-xl sm:font-semibold font-medium rounded-md bg-[#67615D] py-2 px-4"
                 onClick={() => openPopup(movie)} // Open popup for the clicked movie
                 aria-label="More Info"
               >
-                <FiInfo size={25} />
+                <FiInfo className="text-sm sm:text-xl" />
                 More Info
               </button>
             </div>

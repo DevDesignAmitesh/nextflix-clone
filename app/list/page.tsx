@@ -16,7 +16,7 @@ const page = async () => {
       <div className="bg-[#171719] w-full min-h-screen text-white">
         <Navbar image={userProfile} />
         {allFavMovies.length !== 0 ? (
-          <div className=" w-full h-screen pt-28 px-14">
+          <div className=" w-full h-screen pt-16 sm:pt-28 px-5 sm:px-14">
             <MovieList
               email={userEmail}
               finalMovies={allFavMovies}

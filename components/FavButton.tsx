@@ -49,11 +49,19 @@ const FavButton = ({ email, movieId }: FavButtonProps) => {
   };
 
   return (
-    <div className="w-10 h-10 cursor-pointer hover:opacity-60 border-white border-2 rounded-full flex justify-center items-center">
+    <div className="p-2 sm:p-3 md:p-4 cursor-pointer hover:opacity-60 bg-black rounded-full flex justify-center items-center transition duration-200">
       {isFav ? (
-        <IoMdCheckmark onClick={handledelMovie} size={25} color="white" />
+        <IoMdCheckmark
+          onClick={handledelMovie}
+          className="text-xl sm:text-2xl md:text-3xl"
+          color="white"
+        />
       ) : (
-        <GoPlus onClick={handleAddMovie} size={25} color="white" />
+        <GoPlus
+          onClick={handleAddMovie}
+          className="text-xl sm:text-2xl md:text-3xl"
+          color="white"
+        />
       )}
     </div>
   );

@@ -42,7 +42,7 @@ const WatchMovie = async ({
 
   return (
     <div className="w-full min-h-screen bg-black text-white">
-      <nav className="w-full p-5 gap-10 text-white flex justify-start items-center">
+      <nav className="w-full p-5 gap-4 sm:gap-10 text-white flex justify-start items-center">
         <Link href={"/"}>
           <MdOutlineKeyboardBackspace size={30} />
         </Link>
@@ -53,7 +53,7 @@ const WatchMovie = async ({
       <video
         autoPlay
         controls
-        className="w-full h-[36.25vw]"
+        className="w-full h-[56.25vw] sm:h-[36.25vw]"
         src={movie.videoUrl}
       />
     </div>

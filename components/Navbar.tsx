@@ -32,21 +32,22 @@ const Navbar = ({ image }: { image: string }) => {
     <nav
       className={`w-full transition-all ${
         navbarBg ? "bg-black opacity-90" : ""
-      } fixed z-40 flex justify-between items-center px-14 py-5`}
+      } fixed z-40 flex justify-between items-center px-5 sm:px-14 py-2 sm:py-5`}
     >
       <div className="flex justify-center items-center gap-10">
         <img
-          className="h-[30px]"
+          className="h-auto w-[10vw] max-w-[100px] min-w-[50px] object-contain"
           src={
             "https://raw.githubusercontent.com/burakorkmez/mern-netflix-clone/refs/heads/master/frontend/public/netflix-logo.png"
           }
           alt="logo"
         />
+
         <NavItems />
       </div>
       <div className="flex relative gap-6 justify-center items-center">
-        <IoSearch size={25} />
-        <FaRegBell size={25} />
+        <IoSearch className="hidden sm:block" size={25} />
+        <FaRegBell className="hidden sm:block" size={25} />
         <div
           onClick={() => setAccountPannel((p) => !p)}
           className="flex gap-2 justify-center cursor-pointer items-center"
