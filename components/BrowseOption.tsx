@@ -14,11 +14,7 @@ interface navItemsProps2 {
 const BrowseOption = ({ className }: navItemsProps2) => {
   const navItems: navItemsProps[] = [
     { label: "Home", path: "/" },
-    { label: "TV Shows", path: "/about" },
-    { label: "Movies", path: "/services" },
-    { label: "New & Popular", path: "/contact" },
     { label: "My List", path: "/list" },
-    { label: "Browse By Language", path: "/browse" },
   ];
 
   const pathName = usePathname();

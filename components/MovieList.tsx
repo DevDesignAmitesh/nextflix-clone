@@ -5,7 +5,7 @@ import { FaPlay } from "react-icons/fa";
 import { FiInfo } from "react-icons/fi";
 import FavButton from "./FavButton";
 import Link from "next/link";
-import Popup from "./Popup"; // Import Popup component
+import Popup from "./Popup";
 
 const MovieList = ({
   label,
@@ -90,7 +90,6 @@ const MovieList = ({
         </div>
       )}
 
-      {/* Show Popup when movie is clicked */}
       {popupMovie && (
         <Popup email={email} movie={popupMovie} onClose={closePopup} />
       )}

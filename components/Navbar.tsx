@@ -46,8 +46,6 @@ const Navbar = ({ image }: { image: string }) => {
         <NavItems />
       </div>
       <div className="flex relative gap-6 justify-center items-center">
-        <IoSearch className="hidden sm:block" size={25} />
-        <FaRegBell className="hidden sm:block" size={25} />
         <div
           onClick={() => setAccountPannel((p) => !p)}
           className="flex gap-2 justify-center cursor-pointer items-center"

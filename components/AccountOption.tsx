@@ -8,7 +8,7 @@ interface accountProps {
 }
 
 const AccountOption = ({ image, accountPannel }: accountProps) => {
-  if(!accountPannel){
+  if (!accountPannel) {
     return null;
   }
   return (
@@ -21,7 +21,6 @@ const AccountOption = ({ image, accountPannel }: accountProps) => {
         ) : (
           <MdAccountCircle size={25} />
         )}
-        <p className="text-[14px] hover:underline whitespace-nowrap">Account</p>
       </div>
       <button
         className="text-[14px] hover:underline whitespace-nowrap"
